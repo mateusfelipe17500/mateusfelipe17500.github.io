@@ -37,11 +37,11 @@
   </script>
 
   <!-- React 18 -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react@18.2.0/umd/react.production.min.js" crossorigin="anonymous" onerror="showFatalError('📶','Erro ao carregar React','Verifique sua conexão e recarregue.')"></script>
   <!-- React DOM 18 -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.production.min.js" crossorigin="anonymous" onerror="showFatalError('📶','Erro ao carregar ReactDOM','Verifique sua conexão e recarregue.')"></script>
   <!-- Babel 7 standalone — necessário para compilar JSX no navegador -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.23.5/babel.min.js" crossorigin="anonymous" onerror="showFatalError('📶','Erro ao carregar Babel','Verifique sua conexão e recarregue.')"></script>
 
   <script>
     // Verifica carregamento de todas as dependências
@@ -79,7 +79,7 @@
       var el = document.getElementById('err-overlay');
       var txt = document.getElementById('err-text');
       if (el && txt) {
-        txt.textContent = 'Mensagem: ' + msg + '\nArquivo: ' + src + '\nLinha: ' + line + ', Col: ' + col + (err ? '\nStack: ' + err.stack : '');
+        txt.textContent = 'Msg: ' + msg + '\nArq: ' + src + '\nLinha: ' + line + ', Col: ' + col + (err ? '\nStack: ' + err.stack : '') + '\n\nReact: ' + (typeof React) + '\nReactDOM: ' + (typeof ReactDOM) + '\nBabel: ' + (typeof Babel);
         el.style.display = 'block';
       }
       return false;
@@ -88,7 +88,7 @@
       var el = document.getElementById('err-overlay');
       var txt = document.getElementById('err-text');
       if (el && txt) {
-        txt.textContent = 'Promise rejeitada: ' + (e.reason ? (e.reason.message || e.reason) : 'desconhecido') + (e.reason && e.reason.stack ? '\nStack: ' + e.reason.stack : '');
+        txt.textContent = 'Promise: ' + (e.reason ? (e.reason.message || e.reason) : '?') + (e.reason && e.reason.stack ? '\n' + e.reason.stack : '');
         el.style.display = 'block';
       }
     });
