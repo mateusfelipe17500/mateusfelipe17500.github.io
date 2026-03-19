@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<title>NAIPE - Diagnóstico</title>
+</head>
+<body>
+<div id="status" style="font-family:monospace;padding:20px;background:#111;color:#0f0;min-height:100vh;">
+Carregando diagnóstico...<br/>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
+<script>
+function log(msg, color) {
+  document.getElementById('status').innerHTML += '<br/><span style="color:'+(color||'#0f0')+'">'+msg+'</span>';
+}
+window.addEventListener('load', function() {
+  log('Babel carregado: ' + (typeof Babel !== 'undefined' ? 'SIM' : 'NAO'));
+  log('React carregado: NAO (não incluído neste teste)');
+  
+  // Testar se Babel aceita async functions
+  var tests = [
+    ['async simples', 'async function test() { return 1; }'],
+    ['var async', 'var fn = async function() { return 1; }'],
+    ['await', 'async function test2() { var x = await Promise.resolve(1); return x; }'],
+    ['optional chaining', 'var x = {}; var y = x?.foo?.bar;'],
+    ['nullish', 'var x = null; var y = x ?? "default";'],
+  ];
+  
+  tests.forEach(function(t) {
+    try {
+      Babel.transform(t[1], {presets:['env'], sourceType:'script'});
+      log('OK: ' + t[0], '#0f0');
+    } catch(e) {
+      log('ERRO ' + t[0] + ': ' + e.message, '#f00');
+    }
+  });
+  
+  log('<br/>Se todos OK acima, o problema é específico do código NAIPE.', '#ff0');
+  log('Se algum ERRO, é incompatibilidade do Babel com essa sintaxe.', '#ff0');
+});
+</script>
+</body>
+</html>
